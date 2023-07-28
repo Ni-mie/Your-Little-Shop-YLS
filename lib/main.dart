@@ -30,7 +30,6 @@ class MyApp extends StatelessWidget {
         '/second': (context) => Login(),
         '/third': (context) => SignUpPage(),
         '/fourth': (context) => HomePage(),
-        '/fifth': (context) => DetailsPage(),
       },
     );
   }

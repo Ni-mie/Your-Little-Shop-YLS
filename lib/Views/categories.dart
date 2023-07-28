@@ -8,8 +8,13 @@ import 'package:your_little_shop/Utilities/app_colors.dart';
 import 'package:your_little_shop/Utilities/dimensions.dart';
 import 'package:your_little_shop/Utilities/small_text.dart';
 
+import '../Models/fetch_Products.dart';
+
 class Categories extends StatefulWidget {
-  const Categories({Key? key}) : super(key: key);
+  final List<ProductModel> productList;
+  final ProductModel product;
+  const Categories({Key? key, required this.product, required this.productList})
+      : super(key: key);
 
   @override
   State<Categories> createState() => _CategoriesState();
@@ -41,7 +46,7 @@ class _CategoriesState extends State<Categories> {
           color: Colors.grey[400]?.withOpacity(0.4)),
       child: SmallText(
         color: AppColors.mainappColor,
-        text: 'Women\'s Clothing',
+        text: widget.product.category.toString(),
         size: 18,
       ),
     );

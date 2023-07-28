@@ -11,8 +11,11 @@ import 'package:your_little_shop/Utilities/expandabletextwidget.dart';
 import 'package:your_little_shop/Utilities/icons.dart';
 import 'package:your_little_shop/Utilities/small_text.dart';
 
+import '../Models/fetch_Products.dart';
+
 class DetailsPage extends StatefulWidget {
-  DetailsPage({Key? key}) : super(key: key);
+  final ProductModel product;
+  DetailsPage({Key? key, required this.product}) : super(key: key);
 
   @override
   State<DetailsPage> createState() => _DetailsPageState();
@@ -42,8 +45,7 @@ class _DetailsPageState extends State<DetailsPage> {
                 padding: EdgeInsets.fromLTRB(0, 50, 0, 30),
                 decoration: BoxDecoration(
                     image: DecorationImage(
-                        image: NetworkImage(
-                            detailsController.productList[2].image),
+                        image: NetworkImage(widget.product.image),
                         fit: BoxFit.cover),
                     borderRadius: BorderRadius.circular(25)),
               ),
@@ -92,15 +94,14 @@ class _DetailsPageState extends State<DetailsPage> {
                     children: <Widget>[
                       BigText(
                         color: AppColors.textheadingColor,
-                        text: detailsController.productList[2].title,
+                        text: widget.product.title,
                         size: 20,
                       ),
                       SizedBox(
                         height: 8,
                       ),
                       SmallText(
-                          text: detailsController.productList[2].rating
-                              .toString(),
+                          text: widget.product.rating.toString(),
                           size: 14,
                           color: AppColors.textheadingColor),
                       SizedBox(
@@ -108,14 +109,11 @@ class _DetailsPageState extends State<DetailsPage> {
                       ),
                       BigText(
                           color: AppColors.mainappColor,
-                          text: '\$' +
-                              detailsController.productList[2].price
-                                  .toString()),
+                          text: '\$' + widget.product.price.toString()),
                       SizedBox(
                         height: 10,
                       ),
-                      ExpandableText(
-                          text: detailsController.productList[2].description),
+                      ExpandableText(text: widget.product.description),
                       SizedBox(
                         height: 20,
                       ),

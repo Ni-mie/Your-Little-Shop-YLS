@@ -11,6 +11,9 @@ import 'package:your_little_shop/Utilities/dimensions.dart';
 import 'package:your_little_shop/Utilities/expandabletextwidget.dart';
 import 'package:your_little_shop/Utilities/small_text.dart';
 
+import '../Models/fetch_Products.dart';
+import 'detailspage.dart';
+
 class HomePageBody extends StatefulWidget {
   HomePageBody({Key? key}) : super(key: key);
 
@@ -19,6 +22,7 @@ class HomePageBody extends StatefulWidget {
 }
 
 class _HomePageBodyState extends State<HomePageBody> {
+  final detailsController = Get.find<ProductController>();
   final ProductController productController = Get.put(ProductController());
   @override
   Widget build(BuildContext context) {
@@ -51,7 +55,13 @@ class _HomePageBodyState extends State<HomePageBody> {
   Widget _buildPageItem(int index) {
     return InkWell(
       onTap: () {
-        Navigator.pushNamed(context, '/fifth');
+        ProductModel selectedProduct = detailsController.productList[index];
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => DetailsPage(product: selectedProduct),
+          ),
+        );
       },
       child: Card(
         elevation: 5,

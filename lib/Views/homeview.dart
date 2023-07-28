@@ -2,6 +2,7 @@
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:your_little_shop/Utilities/app_colors.dart';
 import 'package:your_little_shop/Utilities/big_text.dart';
 import 'package:your_little_shop/Utilities/dimensions.dart';
@@ -9,6 +10,9 @@ import 'package:your_little_shop/Utilities/dimensions.dart';
 import 'package:your_little_shop/Utilities/small_text.dart';
 import 'package:your_little_shop/Views/categories.dart';
 import 'package:your_little_shop/Views/homepagebody.dart';
+
+import '../Controllers/product_controller.dart';
+import '../Models/fetch_Products.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -18,6 +22,18 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  final categoriesController = Get.find<ProductController>();
+  List<ProductModel> filteredProductList = [];
+
+  void filterProducts(String query) {
+    setState(() {
+      filteredProductList = categoriesController.productList
+          .where((product) =>
+              product.title.toLowerCase().contains(query.toLowerCase()))
+          .toList();
+    });
+  }
+
   int _selectedIndex = 0;
   void _onItemTapped(int index) {
     setState(() {
@@ -26,6 +42,11 @@ class _HomePageState extends State<HomePage> {
   }
 
   @override
+  void initState() {
+    filteredProductList = categoriesController.productList;
+    super.initState();
+  }
+
   Widget build(BuildContext context) {
     return Scaffold(
       bottomNavigationBar: BottomNavigationBar(
@@ -70,18 +91,17 @@ class _HomePageState extends State<HomePage> {
                   borderRadius: BorderRadius.circular(16),
                 ),
                 child: TextField(
+                    onChanged: filterProducts,
                     decoration: InputDecoration(
-                  contentPadding:
-                      EdgeInsets.symmetric(vertical: 15, horizontal: 10),
-                  border: InputBorder.none,
-                  prefixIcon: Icon(Icons.search),
-                  hintText: "Find Products",
-                )),
+                      contentPadding:
+                          EdgeInsets.symmetric(vertical: 15, horizontal: 10),
+                      border: InputBorder.none,
+                      prefixIcon: Icon(Icons.search),
+                      hintText: "Find Products",
+                    )),
               ),
-              SizedBox(height: 30),
-              Categories(),
               SizedBox(
-                height: 5,
+                height: 15,
               ),
               HomePageBody(),
             ],
